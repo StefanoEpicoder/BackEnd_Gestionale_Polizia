@@ -37,6 +37,7 @@ namespace Epicode_S5_L5_BackEnd_Project.Controllers
                     {
                         if (reader.Read())
                         {
+                            // Creazione di un oggetto Verbale con i dati ottenuti dal database
                             Verbale verbale = new Verbale
                             {
                                 IdVerbale = (int)reader["IdVerbale"],
@@ -61,33 +62,40 @@ namespace Epicode_S5_L5_BackEnd_Project.Controllers
         [HttpGet]
         public List<Violazione> ListaViolazioni()
         {
+            // Verifica se la lista delle violazioni è già stata inizializzata
             if (listaViolazioni == null)
             {
+                // Inizializza la lista delle violazioni
                 listaViolazioni = new List<Violazione>();
 
+                // Apre una connessione al database
                 using (SqlConnection connection = new SqlConnection(GetConnectionString()))
                 {
                     connection.Open();
                     string query = "SELECT * FROM Violazione";
 
+                    // Esegue una query per ottenere tutte le violazioni dal database
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
+                                // Crea un oggetto Violazione con i dati ottenuti dal database
                                 Violazione violazione = new Violazione
                                 {
                                     IdViolazione = (int)reader["IdViolazione"],
                                     Descrizione = reader["Descrizione"].ToString(),
                                 };
 
+                                // Aggiunge la violazione alla lista delle violazioni
                                 listaViolazioni.Add(violazione);
                             }
                         }
                     }
                 }
             }
+            // Restituisce la lista delle violazioni
             return listaViolazioni;
         }
 

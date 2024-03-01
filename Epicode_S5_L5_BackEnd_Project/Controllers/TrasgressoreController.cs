@@ -20,19 +20,27 @@ namespace Epicode_S5_L5_BackEnd_Project.Controllers
         // Metodo per ottenere un oggetto Trasgressore dato un IdAnagrafica
         private Trasgressore GetTrasgressoreById(int IdAnagrafica)
         {
+            // Apre una connessione al database utilizzando la stringa di connessione ottenuta dal metodo GetConnectionString()
             using (SqlConnection sqlConnection = new SqlConnection(GetConnectionString()))
             {
+                // Apre la connessione al database
                 sqlConnection.Open();
+                // Query per selezionare un trasgressore dal database utilizzando l'IdAnagrafica come parametro
                 string query = "SELECT * FROM Anagrafica WHERE IdAnagrafica = @IdAnagrafica";
 
+                // Esegue il comando SQL sulla connessione aperta
                 using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
                 {
+                    // Aggiunge il parametro IdAnagrafica al comando SQL
                     cmd.Parameters.AddWithValue("@IdAnagrafica", IdAnagrafica);
 
+                    // Esegue il comando SQL e ottiene un oggetto SqlDataReader per leggere i risultati
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
+                        // Verifica se è stato restituito almeno un risultato
                         if (reader.Read())
                         {
+                            // Crea un nuovo oggetto Trasgressore e popola i suoi attributi con i valori letti dal SqlDataReader
                             Trasgressore trasgressore = new Trasgressore
                             {
                                 IdAnagrafica = (int)reader["IdAnagrafica"],
@@ -43,8 +51,10 @@ namespace Epicode_S5_L5_BackEnd_Project.Controllers
                                 Cap = reader["Cap"].ToString(),
                                 Codice = reader["Codice"].ToString()
                             };
+                            // Restituisce l'oggetto Trasgressore
                             return trasgressore;
                         }
+                        // Se non è stato restituito alcun risultato, restituisce null
                         return null;
                     }
                 }
@@ -99,13 +109,17 @@ namespace Epicode_S5_L5_BackEnd_Project.Controllers
         [HttpPost]
         public ActionResult AggiungiTrasgressore(Trasgressore model)
         {
+            // Verifica se il modello è valido
             if (ModelState.IsValid)
             {
+                // Query per l'inserimento di un nuovo trasgressore nel database
                 string query = "INSERT INTO Anagrafica (Cognome, Nome, Indirizzo, Citta, Cap, Codice)" + "VALUES (@Cognome, @Nome, @Indirizzo, @Citta, @Cap, @Codice)";
 
+                // Apre una connessione al database
                 using (SqlConnection sqlConnection = new SqlConnection(GetConnectionString()))
                 {
                     sqlConnection.Open();
+                    // Esegue la query di inserimento dei dati del trasgressore
                     using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
                     {
                         cmd.Parameters.AddWithValue("@Cognome", model.Cognome);
@@ -115,10 +129,13 @@ namespace Epicode_S5_L5_BackEnd_Project.Controllers
                         cmd.Parameters.AddWithValue("@Cap", model.Cap);
                         cmd.Parameters.AddWithValue("@Codice", model.Codice);
 
+                        // Esegue la query senza restituire risultati
                         cmd.ExecuteNonQuery();
                     }
                 }
+                // Imposta un messaggio di successo nella variabile TempData
                 TempData["Messaggio"] = "Trasgressore aggiunto con successo!";
+                // Reindirizza all'azione "ListaTrasgressori"
                 return RedirectToAction("ListaTrasgressori");
             }
             TempData["Errore"] = "Il modello non è valido. Correggi gli errori e riprova.";
@@ -172,8 +189,10 @@ namespace Epicode_S5_L5_BackEnd_Project.Controllers
         [HttpPost]
         public ActionResult ModificaTrasgressore(Trasgressore trasgressoreModificato)
         {
+            // Verifica se il modello è valido
             if (ModelState.IsValid)
             {
+                // Query per aggiornare i dati del trasgressore nel database
                 string query = "UPDATE Anagrafica SET " +
                     "Cognome = @Cognome, " +
                     "Nome = @Nome, " +
@@ -183,10 +202,12 @@ namespace Epicode_S5_L5_BackEnd_Project.Controllers
                     "Codice = @Codice " +
                     "WHERE IdAnagrafica = @IdAnagrafica";
 
+                // Apre una connessione al database
                 using (SqlConnection sqlConnection = new SqlConnection(GetConnectionString()))
                 {
                     sqlConnection.Open();
 
+                    // Esegue la query di aggiornamento dei dati del trasgressore
                     using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
                     {
                         cmd.Parameters.AddWithValue("@IdAnagrafica", trasgressoreModificato.IdAnagrafica);
@@ -197,11 +218,14 @@ namespace Epicode_S5_L5_BackEnd_Project.Controllers
                         cmd.Parameters.AddWithValue("@Cap", trasgressoreModificato.Cap);
                         cmd.Parameters.AddWithValue("@Codice", trasgressoreModificato.Codice);
 
+                        // Esegue la query senza restituire risultati
                         cmd.ExecuteNonQuery();
                     }
                 }
+                // Imposta un messaggio di successo nella variabile TempData
                 TempData["Messaggio"] = "Trasgressore modificato con successo!";
             }
+            // Reindirizza all'azione "ListaTrasgressori"
             return RedirectToAction("ListaTrasgressori");
         }
     }
