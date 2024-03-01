@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Epicode_S5_L5_BackEnd_Project.Models.Verbale>
+
+@{
+    ViewBag.Title = "ListaVerbaliTrascrittiPerTrasgressori";
+}
+
+
+<div class="text-center d-flex align-items-center flex-column">
+
+    <div class="d-flex flex-column">
+        <div>
+            <h2 class="text-center">Lista Verbali Trascritti Per Trasgressori</h2>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>IdAnagrafica</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Totale dei Verbali Trascritti</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var verbale in Model)
+            {
+                <tr>
+                    <td>@verbale.IdAnagrafica</td>
+                    <td>@verbale.Nome</td>
+                    <td>@verbale.Cognome</td>
+                    <td>@verbale.NumeroVerbaliTrascritti</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

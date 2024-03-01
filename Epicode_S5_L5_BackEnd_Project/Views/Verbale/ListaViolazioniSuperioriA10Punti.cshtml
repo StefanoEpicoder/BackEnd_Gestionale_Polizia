@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Epicode_S5_L5_BackEnd_Project.Models.Violazione>
+
+@{
+    ViewBag.Title = "ListaViolazioniSuperioriA10Punti";
+}
+
+
+<div class="text-center d-flex align-items-center flex-column">
+
+    <div class="d-flex flex-column">
+        <div>
+            <h2 class="text-center">Lista Violazioni Superiori a 10 Punti</h2>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Indirizzo Violazione</th>
+                <th>Data violazione</th>
+                <th>Importo</th>
+                <th>Decurtamento punti</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var verbale in Model)
+            {
+                <tr>
+                    <td>@verbale.Nome</td>
+                    <td>@verbale.Cognome</td>
+                    <td>@verbale.IndirizzoViolazione</td>
+                    <td>@verbale.DataViolazione</td>
+                    <td>@verbale.Importo</td>
+                    <td>@verbale.DecurtamentoPunti</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

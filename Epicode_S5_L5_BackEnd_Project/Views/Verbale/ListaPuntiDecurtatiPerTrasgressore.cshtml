@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Epicode_S5_L5_BackEnd_Project.Models.Trasgressore>
+
+@{
+    ViewBag.Title = "ListaPuntiDecurtatiPerTrasgressore";
+}
+
+
+<div class="text-center d-flex align-items-center flex-column">
+
+    <div class="d-flex flex-column">
+        <div>
+            <h2 class="text-center">Totale Punti Decurtati Per Trasgressore</h2>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>IdAnagrafica</th>
+                <th>Nome</th>
+                <th>Totale punti decurtati</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var trasgressore in Model)
+            {
+                <tr>
+                    <td>@trasgressore.IdAnagrafica</td>
+                    <td>@trasgressore.Nome</td>
+                    <td>@trasgressore.TotalePuntiDecurtati</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

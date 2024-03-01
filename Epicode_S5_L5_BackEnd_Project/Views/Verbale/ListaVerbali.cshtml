@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Epicode_S5_L5_BackEnd_Project.Models.Verbale>
+
+@{
+    ViewBag.Title = "ListaVerbali";
+}
+
+<div class="text-center d-flex align-items-center flex-column">
+
+    <div class="d-flex flex-column">
+        <div>
+            <h2 class="text-center">Lista dei verbali</h2>
+        </div>
+        <div class="text-right mt-3 mb-3">
+            <a href="@Url.Action("AggiungiVerbale", "Verbale")" class="btn btn-primary">Aggiungi verbale</a>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>IdVerbale</th>
+                <th>DataViolazione</th>
+                <th>IndirizzoViolazione</th>
+                <th>NominativoAgente</th>
+                <th>DataTrascrizioneVerbale</th>
+                <th>Importo</th>
+                <th>DecurtamentoPunti</th>
+                <th>IdAnagrafica</th>
+                <th>IdViolazione</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var verbale in Model)
+            {
+                <tr>
+                    <td>@verbale.IdVerbale</td>
+                    <td>@verbale.DataViolazione</td>
+                    <td>@verbale.IndirizzoViolazione</td>
+                    <td>@verbale.NominativoAgente</td>
+                    <td>@verbale.DataTrascrizioneVerbale</td>
+                    <td>@verbale.Importo</td>
+                    <td>@verbale.DecurtamentoPunti</td>
+                    <td>@verbale.IdAnagrafica</td>
+                    <td>@verbale.IdViolazione</td>
+                    <td class="d-flex justify-content-evenly">
+                        @Html.ActionLink("Modifica", "ModificaVerbale", "Verbale", new { IdVerbale = verbale.IdVerbale }, new { @class = "btn btn-warning btn-sm" })
+                        <form action="@Url.Action("EliminaVerbale", "Verbale")" method="post">
+                            @Html.Hidden("IdVerbale", verbale.IdVerbale)
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger btn-sm mx-1">Elimina</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

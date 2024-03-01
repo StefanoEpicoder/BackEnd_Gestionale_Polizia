@@ -1,0 +1,82 @@
+﻿@model Epicode_S5_L5_BackEnd_Project.Models.Verbale
+
+@{
+    ViewBag.Title = "AggiungiVerbale";
+}
+
+<div class="container">
+    <h2 class="text-center">Inserisci Verbale</h2>
+
+    <div class="text-center mt-3 mb-3">
+        <a href="@Url.Action("ListaVerbali", "Verbale")" class="btn btn-primary">Lista dei verbali</a>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="justify-content-center conteiner">
+            <div class="d-flex flex-column align-items-center">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="d-flex justify-content-center">
+                    <div class="form-group mx-3 mb-3">
+                        <h6>Trasgressore</h6>
+                        @Html.DropDownListFor(model => model.IdAnagrafica, (IEnumerable<SelectListItem>)ViewBag.ListaAnagrafica, "Seleziona un utente", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IdAnagrafica, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Tipo Violazione</h6>
+                        @Html.DropDownListFor(model => model.IdViolazione, (IEnumerable<SelectListItem>)ViewBag.ListaViolazioni, "Seleziona una violazione", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IdViolazione, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="form-group mx-3 mb-3">
+                        <h6>Data Violazione</h6>
+                        @Html.EditorFor(model => model.DataViolazione, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DataViolazione, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Indirizzo Violazione</h6>
+                        @Html.EditorFor(model => model.IndirizzoViolazione, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IndirizzoViolazione, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="form-group mx-3 mb-3">
+                        <h6>Nominativo Agente</h6>
+                        @Html.EditorFor(model => model.NominativoAgente, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NominativoAgente, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Data Trascrizione Verbale</h6>
+                        @Html.EditorFor(model => model.DataTrascrizioneVerbale, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DataTrascrizioneVerbale, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="form-group mx-3 mb-3">
+                        <h6>Importo</h6>
+                        @Html.EditorFor(model => model.Importo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Importo, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Punti Decurtati</h6>
+                        @Html.EditorFor(model => model.DecurtamentoPunti, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DecurtamentoPunti, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                    <div class="text-center mt-3">
+                        <input type="submit" value="Aggiungi verbale" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+    }
+</div>

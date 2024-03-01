@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Epicode_S5_L5_BackEnd_Project.Models.Trasgressore>
+
+@{
+    ViewBag.Title = "ListaTrasgressori";
+}
+
+<div class="container text-center">
+    <div class="row">
+        <div>
+            <h2 class="text-center">Lista dei trasgressori</h2>
+        </div>
+        <div class="text-right mt-3 mb-3">
+            <a href="@Url.Action("AggiungiTrasgressore", "Trasgressore")" class="btn btn-primary">Aggiungi trasgressore</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>IdAnagrafica</th>
+                <th>Cognome</th>
+                <th>Nome</th>
+                <th>Indirizzo</th>
+                <th>Città</th>
+                <th>CAP</th>
+                <th>Codice Fiscale</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var trasgressore in Model)
+            {
+                <tr>
+                    <td>@trasgressore.IdAnagrafica</td>
+                    <td>@trasgressore.Cognome</td>
+                    <td>@trasgressore.Nome</td>
+                    <td>@trasgressore.Indirizzo</td>
+                    <td>@trasgressore.Citta</td>
+                    <td>@trasgressore.Cap</td>
+                    <td>@trasgressore.Codice</td>
+                    <td class="d-flex justify-content-evenly">
+                        @Html.ActionLink("Modifica", "ModificaTrasgressore", "Trasgressore", new { IdAnagrafica = trasgressore.IdAnagrafica }, new { @class = "btn btn-warning btn-sm" })
+                        <form action="@Url.Action("EliminaTrasgressore", "Trasgressore")" method="post">
+                            @Html.Hidden("IdAnagrafica", trasgressore.IdAnagrafica)
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger btn-sm">Elimina</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
